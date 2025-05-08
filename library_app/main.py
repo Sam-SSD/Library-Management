@@ -4,9 +4,9 @@ import utils
 
 def menu():
     """
-    Display the menu options to the user.
+    Muestra el menú principal de opciones.
     """
-    print("\n🔖 Welcome to the Library Management System 🔖")
+    print("\n------------------ Main Menu ------------------")
     print("1. Add Book")
     print("2. Search Book")
     print("3. Borrow Book")
@@ -19,8 +19,8 @@ def menu():
 
 
 # --------------------- Start of the Program ---------------------
-print("🔧 Welcome to the Book Store Management System 🔧")
-library = Library()  # Create an instance of the library
+print("🔧 Welcome to the Library Management System! 🔧")
+library = Library()  # Instancia principal de la biblioteca
 
 while True:
     try:
@@ -32,10 +32,11 @@ while True:
                 title = utils.validate_string("Enter the book title: ")
                 author = utils.validate_string("Enter the author's name: ")
                 genre = utils.validate_genre(
-                    f"Enter the genre (Fiction, Non-Fiction, Mystery, Fantasy, Science Fiction, Biography): ")
+                    "Enter the genre (fiction, non-fiction, mystery, fantasy, science, biography, children): ")
                 copies = utils.validate_positive_integer("Enter the number of copies: ")
                 library.add_book(title, author, genre, copies)
                 print("------------------------------------------------")
+
             case "2":
                 print("\n------------------ Search Book ------------------")
                 if library.total_books == 0:
@@ -49,22 +50,25 @@ while True:
                 else:
                     print(f"❌ Book '{title}' not found in the library.")
                 print("------------------------------------------------")
+
             case "3":
                 print("\n------------------ Borrow Book ------------------")
-                if library.total_books == 0:
-                    print("❌ No books available in the library.")
+                if library.available_books == 0:
+                    print("❌ No available copies in the library.")
                     continue
                 title = utils.validate_string("Enter the book title to borrow: ")
                 library.borrow_book(title)
                 print("------------------------------------------------")
+
             case "4":
                 print("\n------------------ Return Book ------------------")
-                if library.total_books == 0:
-                    print("❌ No books available in the library.")
+                if library.borrowed_books == 0:
+                    print("❌ No books currently borrowed.")
                     continue
                 title = utils.validate_string("Enter the book title to return: ")
                 library.return_book(title)
                 print("------------------------------------------------")
+
             case "5":
                 print("\n------------------ Remove Book ------------------")
                 if library.total_books == 0:
@@ -73,6 +77,7 @@ while True:
                 title = utils.validate_string("Enter the book title to remove: ")
                 library.remove_book(title)
                 print("------------------------------------------------")
+
             case "6":
                 print("\n------------------ List Books by Genre ------------------")
                 if library.total_books == 0:
@@ -80,14 +85,17 @@ while True:
                     continue
                 library.list_books_by_genre()
                 print("------------------------------------------------")
+
             case "7":
                 print("\n------------------ Inventory Summary ------------------")
                 library.inventory_summary()
                 print("------------------------------------------------")
+
             case "8":
                 print("🔚 Exiting the program. Goodbye! 🔚")
                 print("------------------------------------------------")
                 break
+
             case _:
                 print("❌ Invalid option. Please select a valid option from the menu.")
     except Exception as e:
