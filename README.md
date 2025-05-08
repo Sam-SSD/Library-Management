@@ -1,3 +1,5 @@
+![Library management system banner](https://github.com/user-attachments/assets/b71cf61c-3eb0-41a1-820e-e84f4ca650fd)
+
 # 📚 Sistema de Gestión de Biblioteca
 
 ### 📘 English version  
