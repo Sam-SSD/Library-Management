@@ -1,10 +1,113 @@
 from library import Library
 import utils
 
+# Instantiate the main Library object
+library = Library()
+
+
+def handle_add_book():
+    """
+    Handles the logic for adding a new book to the library.
+    Prompts the user for title, author, genre, and number of copies.
+    """
+    print("\n------------------ Add Book ------------------")
+    title = utils.validate_string("Enter the book title: ")
+    author = utils.validate_string("Enter the author's name: ")
+    genre = utils.validate_genre(
+        "Enter the genre (fiction, non-fiction, mystery, fantasy, science, biography, children): ")
+    copies = utils.validate_positive_integer("Enter the number of copies: ")
+    library.add_book(title, author, genre, copies)
+    print("------------------------------------------------")
+
+
+def handle_search_book():
+    """
+    Searches for a book by title and displays its information if found.
+    """
+    print("\n------------------ Search Book ------------------")
+    if library.total_books == 0:
+        print("❌ No books available in the library.")
+        return
+
+    title = utils.validate_string("Enter the book title to search: ")
+    book = library.search_book(title)
+    if book:
+        print(f"🔎 Found: {book['title']} by {book['author']} | Genre: {book['genre']} | Copies: {book['copies']}")
+    else:
+        print(f"❌ Book '{title}' not found in the library.")
+    print("------------------------------------------------")
+
+
+def handle_borrow_book():
+    """
+    Attempts to borrow a book from the library by title.
+    """
+    print("\n------------------ Borrow Book ------------------")
+    if library.available_books == 0:
+        print("❌ No available copies in the library.")
+        return
+
+    title = utils.validate_string("Enter the book title to borrow: ")
+    library.borrow_book(title)
+    print("------------------------------------------------")
+
+
+def handle_return_book():
+    """
+    Handles the return of a borrowed book by title.
+    """
+    print("\n------------------ Return Book ------------------")
+    if library.borrowed_books == 0:
+        print("❌ No books currently borrowed.")
+        return
+
+    title = utils.validate_string("Enter the book title to return: ")
+    library.return_book(title)
+    print("------------------------------------------------")
+
+
+def handle_remove_book():
+    """
+    Removes a book from the library if it has no borrowed copies.
+    """
+    print("\n------------------ Remove Book ------------------")
+    if library.total_books == 0:
+        print("❌ No books available in the library.")
+        return
+
+    title = utils.validate_string("Enter the book title to remove: ")
+    library.remove_book(title)
+    print("------------------------------------------------")
+
+
+def handle_list_books_by_genre():
+    """
+    Displays the list of books grouped by genre.
+    """
+    print("\n------------------ List Books by Genre ------------------")
+    if library.total_books == 0:
+        print("❌ No books available in the library.")
+        return
+
+    library.list_books_by_genre()
+    print("------------------------------------------------")
+
+
+def handle_inventory_summary():
+    """
+    Prints a summary of the entire library inventory.
+    """
+    print("\n------------------ Inventory Summary ------------------")
+    library.inventory_summary()
+    print("------------------------------------------------")
+
 
 def menu():
     """
-    Muestra el menú principal de opciones.
+    Displays the main menu options and returns the user's choice.
+
+    Returns:
+        str: The selected menu option.
     """
     print("\n------------------ Main Menu ------------------")
     print("1. Add Book")
@@ -18,9 +121,8 @@ def menu():
     return input("Select an option: ").strip()
 
 
-# --------------------- Start of the Program ---------------------
+# 🟢 Entry point of the program
 print("🔧 Welcome to the Library Management System! 🔧")
-library = Library()  # Instancia principal de la biblioteca
 
 while True:
     try:
@@ -28,74 +130,23 @@ while True:
 
         match option:
             case "1":
-                print("\n------------------ Add Book ------------------")
-                title = utils.validate_string("Enter the book title: ")
-                author = utils.validate_string("Enter the author's name: ")
-                genre = utils.validate_genre(
-                    "Enter the genre (fiction, non-fiction, mystery, fantasy, science, biography, children): ")
-                copies = utils.validate_positive_integer("Enter the number of copies: ")
-                library.add_book(title, author, genre, copies)
-                print("------------------------------------------------")
-
+                handle_add_book()
             case "2":
-                print("\n------------------ Search Book ------------------")
-                if library.total_books == 0:
-                    print("❌ No books available in the library.")
-                    continue
-                title = utils.validate_string("Enter the book title to search: ")
-                book = library.search_book(title)
-                if book:
-                    print(
-                        f"🔎 Found: {book['title']} by {book['author']} | Genre: {book['genre']} | Copies: {book['copies']}")
-                else:
-                    print(f"❌ Book '{title}' not found in the library.")
-                print("------------------------------------------------")
-
+                handle_search_book()
             case "3":
-                print("\n------------------ Borrow Book ------------------")
-                if library.available_books == 0:
-                    print("❌ No available copies in the library.")
-                    continue
-                title = utils.validate_string("Enter the book title to borrow: ")
-                library.borrow_book(title)
-                print("------------------------------------------------")
-
+                handle_borrow_book()
             case "4":
-                print("\n------------------ Return Book ------------------")
-                if library.borrowed_books == 0:
-                    print("❌ No books currently borrowed.")
-                    continue
-                title = utils.validate_string("Enter the book title to return: ")
-                library.return_book(title)
-                print("------------------------------------------------")
-
+                handle_return_book()
             case "5":
-                print("\n------------------ Remove Book ------------------")
-                if library.total_books == 0:
-                    print("❌ No books available in the library.")
-                    continue
-                title = utils.validate_string("Enter the book title to remove: ")
-                library.remove_book(title)
-                print("------------------------------------------------")
-
+                handle_remove_book()
             case "6":
-                print("\n------------------ List Books by Genre ------------------")
-                if library.total_books == 0:
-                    print("❌ No books available in the library.")
-                    continue
-                library.list_books_by_genre()
-                print("------------------------------------------------")
-
+                handle_list_books_by_genre()
             case "7":
-                print("\n------------------ Inventory Summary ------------------")
-                library.inventory_summary()
-                print("------------------------------------------------")
-
+                handle_inventory_summary()
             case "8":
-                print("🔚 Exiting the program. Goodbye! 🔚")
+                print("🔚 Exiting the program. Goodbye!")
                 print("------------------------------------------------")
                 break
-
             case _:
                 print("❌ Invalid option. Please select a valid option from the menu.")
     except Exception as e:

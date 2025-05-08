@@ -1,13 +1,21 @@
 # utils.py
 
+# Predefined list of accepted genres
 VALID_GENRES = [
     "fiction", "non-fiction", "mystery", "fantasy", "science", "biography", "children"
 ]
 
 
-def validate_positive_integer(message):
+def validate_positive_integer(message: str) -> int:
     """
-    Solicita al usuario un número entero positivo.
+    Prompts the user to enter a positive integer.
+    Keeps asking until valid input is provided.
+
+    Args:
+        message (str): Prompt message to display.
+
+    Returns:
+        int: A valid positive integer.
     """
     while True:
         try:
@@ -20,9 +28,16 @@ def validate_positive_integer(message):
             print("❌ Invalid input. Please enter a positive integer.")
 
 
-def validate_string(message):
+def validate_string(message: str) -> str:
     """
-    Solicita un string no vacío y no numérico.
+    Prompts the user to enter a non-empty, non-numeric string.
+    Useful for names, titles, etc.
+
+    Args:
+        message (str): Prompt message to display.
+
+    Returns:
+        str: A valid string.
     """
     while True:
         value = input(message).strip()
@@ -32,9 +47,16 @@ def validate_string(message):
             return value
 
 
-def validate_genre(message):
+def validate_genre(message: str) -> str:
     """
-    Solicita un género válido de la lista predefinida.
+    Prompts the user to enter a valid genre.
+    Keeps asking until the input matches one of the predefined genres.
+
+    Args:
+        message (str): Prompt message to display.
+
+    Returns:
+        str: A valid genre string in lowercase.
     """
     while True:
         value = input(message).strip().lower()
