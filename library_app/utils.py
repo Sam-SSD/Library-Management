@@ -1,5 +1,3 @@
-# utils.py
-
 # Predefined list of accepted genres
 VALID_GENRES = [
     "fiction", "non-fiction", "mystery", "fantasy", "science", "biography", "children"
