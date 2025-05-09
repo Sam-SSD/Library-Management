@@ -133,7 +133,25 @@ class Library:
                 return
         print(f"❌ Book '{title}' not found.")
 
-    def list_books_by_genre(self):
+    def list_books_by_genre(self, genre):
+        """
+        Displays all books of a specific genre.
+        If no books are found in that genre, it informs the user.
+
+        Parameters:
+            genre (str): The genre to filter books by.
+        """
+        genre = genre.lower()
+        genre_books = [book for book in self.books if book["genre"] == genre]
+        if not genre_books:
+            print(f"❌ No books found in the '{genre}' genre.")
+            return
+
+        print(f"\n📚 Books in '{genre}' Genre:")
+        for book in genre_books:
+            print(f" - {book['title']} by {book['author']} | Copies: {book['copies']}")
+
+    def list_books_by_all_genres(self):
         """
         Displays all books grouped by genre.
         Only genres with at least one book are shown.

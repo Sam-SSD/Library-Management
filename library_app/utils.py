@@ -4,7 +4,7 @@ VALID_GENRES = [
 ]
 
 
-def validate_positive_integer(message: str) -> int:
+def validate_positive_integer(message):
     """
     Prompts the user to enter a positive integer.
     Keeps asking until valid input is provided.
@@ -26,7 +26,7 @@ def validate_positive_integer(message: str) -> int:
             print("❌ Invalid input. Please enter a positive integer.")
 
 
-def validate_string(message: str) -> str:
+def validate_string(message):
     """
     Prompts the user to enter a non-empty, non-numeric string.
     Useful for names, titles, etc.
@@ -45,7 +45,7 @@ def validate_string(message: str) -> str:
             return value
 
 
-def validate_genre(message: str) -> str:
+def validate_genre(message):
     """
     Prompts the user to enter a valid genre.
     Keeps asking until the input matches one of the predefined genres.
@@ -63,3 +63,54 @@ def validate_genre(message: str) -> str:
             print(f"   {', '.join(VALID_GENRES)}")
         else:
             return value
+
+
+def validate_available_books(library):
+    """
+    Validates if there are any available books in the library.
+    If not, it informs the user and returns False.
+    Otherwise, it returns True.
+    Args:
+        library (Library): The library instance to check.
+    Returns:
+        bool: True if there are available books, False otherwise.
+    """
+    if library.available_books == 0:
+        print("❌ No available copies in the library.")
+        print("------------------------------------------------")
+        return False
+    return True
+
+
+def validate_available_total_books(library):
+    """
+    Validates if there are any books available in the library.
+    If not, it informs the user and returns False.
+    Otherwise, it returns True.
+    Args:
+        library (Library): The library instance to check.
+    Returns:
+        bool: True if there are available books, False otherwise.
+    """
+    if library.total_books == 0:
+        print("❌ No books available in the library.")
+        print("------------------------------------------------")
+        return False
+    return True
+
+
+def validate_borrowed_books(library):
+    """
+    Validates if there are any borrowed books in the library.
+    If not, it informs the user and returns False.
+    Otherwise, it returns True.
+    Args:
+        library (Library): The library instance to check.
+    Returns:
+        bool: True if there are borrowed books, False otherwise.
+    """
+    if library.borrowed_books == 0:
+        print("❌ No books currently borrowed.")
+        print("------------------------------------------------")
+        return False
+    return True
